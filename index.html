@@ -70,1690 +70,1221 @@
       </div>
     </div>
     <div id="app">
-      <h2>Linear Workflows</h2>
-      <ol>
-        <li v-for="example in linearExamples" class="examples">
-          <div>{{ example.title }}</div>
-          <div class="example">
-            <div>Before</div>
-            <div class="before">
-              <div v-for="step in example.before" v-bind:class="['step', step.status]"><span>{{ step.title }}</span></div>
-            </div>
-            <div>After</div>
-            <div class="after">
-              <div v-for="step in example.after" v-bind:class="['step', step.status]"><span>{{ step.title }}</span></div>
-            </div>
-          </div>
-        </li>
-      </ol>
-      <h2>Single Branch Workflows</h2>
-      <ol>
-        <li v-for="example in singleBranchExamples" class="examples">
-          <div>{{ example.title }}</div>
-          <div class="example">
-            <div>Before</div>
-            <div class="before">
-              <div v-for="step in example.before" v-bind:class="['step', step.status, step.type]">
-                <span v-if="step.status !== 'branch'">{{ step.title }}</span>
-                <div v-for="branch in step.branches" class="branchpath">
-                  <div>{{ branch.name }}</div>
-                  <div v-for="branchStep in branch.steps" v-bind:class="['step', branchStep.status]">
-                    <span>{{ branchStep.title }}</span>
+      <div v-for="group in groups">
+
+        <h2>{{group.title}}</h2>
+        <ol>
+          <li v-for="example in group.examples" class="examples">
+            <div>{{ example.title }}</div>
+            <div class="example">
+              <div>Before</div>
+              <div class="before">
+                <div v-for="step in example.before" v-bind:class="['step', step.status, step.type]">
+                  <span v-if="step.status !== 'branch'">{{ step.title }}</span>
+                  <div v-for="branch in step.branches" class="branchpath">
+                    <div>{{ branch.name }}</div>
+                    <div v-for="branchStep in branch.steps" v-bind:class="['step', branchStep.status, branchStep.type]">
+                      <span v-if="branchStep.status !== 'branch'">{{ branchStep.title }}</span>
+                      <div v-for="nestedBranch in branchStep.branches" class="branchpath">
+                        <div>{{ nestedBranch.name }}</div>
+                        <div v-for="nestedBranchStep in nestedBranch.steps" v-bind:class="['step', nestedBranchStep.status]">
+                          <span>{{ nestedBranchStep.title }}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div>After</div>
-            <div class="after">
-              <div v-for="step in example.after" v-bind:class="['step', step.status, step.type]">
-                <span v-if="step.status !== 'branch'">{{ step.title }}</span>
-                <div v-for="branch in step.branches" class="branchpath">
-                  <div>{{ branch.name }}</div>
-                  <div v-for="branchStep in branch.steps" v-bind:class="['step', branchStep.status]">
-                    <span>{{ branchStep.title }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ol>
-      <h2>Multiple Branch Workflows</h2>
-      <ol>
-        <li v-for="example in multipleBranchExamples" class="examples">
-          <div>{{ example.title }}</div>
-          <div class="example">
-            <div>Before</div>
-            <div class="before">
-              <div v-for="step in example.before" v-bind:class="['step', step.status, step.type]">
-                <span v-if="step.status !== 'branch'">{{ step.title }}</span>
-                <div v-for="branch in step.branches" class="branchpath">
-                  <div>{{ branch.name }}</div>
-                  <div v-for="branchStep in branch.steps" v-bind:class="['step', branchStep.status]">
-                    <span>{{ branchStep.title }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>After</div>
-            <div class="after">
-              <div v-for="step in example.after" v-bind:class="['step', step.status, step.type]">
-                <span v-if="step.status !== 'branch'">{{ step.title }}</span>
-                <div v-for="branch in step.branches" class="branchpath">
-                  <div>{{ branch.name }}</div>
-                  <div v-for="branchStep in branch.steps" v-bind:class="['step', branchStep.status]">
-                    <span>{{ branchStep.title }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ol>
-      <h2>Nested Branch Workflows</h2>
-      <ol>
-        <li v-for="example in nestedBranchExamples" class="examples">
-          <div>{{ example.title }}</div>
-          <div class="example">
-            <div>Before</div>
-            <div class="before">
-              <div v-for="step in example.before" v-bind:class="['step', step.status, step.type]">
-                <span v-if="step.status !== 'branch'">{{ step.title }}</span>
-                <div v-for="branch in step.branches" class="branchpath">
-                  <div>{{ branch.name }}</div>
-                  <div v-for="branchStep in branch.steps" v-bind:class="['step', branchStep.status, branchStep.type]">
-                    <span v-if="branchStep.status !== 'branch'">{{ branchStep.title }}</span>
-                    <div v-for="nestedBranch in branchStep.branches" class="branchpath">
-                      <div>{{ nestedBranch.name }}</div>
-                      <div v-for="nestedBranchStep in nestedBranch.steps" v-bind:class="['step', nestedBranchStep.status]">
-                        <span>{{ nestedBranchStep.title }}</span>
+              <div>After</div>
+              <div class="after">
+                <div v-for="step in example.after" v-bind:class="['step', step.status, step.type]">
+                  <span v-if="step.status !== 'branch'">{{ step.title }}</span>
+                  <div v-for="branch in step.branches" class="branchpath">
+                    <div>{{ branch.name }}</div>
+                    <div v-for="branchStep in branch.steps" v-bind:class="['step', branchStep.status, branchStep.type]">
+                      <span v-if="branchStep.status !== 'branch'">{{ branchStep.title }}</span>
+                      <div v-for="nestedBranch in branchStep.branches" class="branchpath">
+                        <div>{{ nestedBranch.name }}</div>
+                        <div v-for="nestedBranchStep in nestedBranch.steps" v-bind:class="['step', nestedBranchStep.status]">
+                          <span>{{ nestedBranchStep.title }}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div>After</div>
-            <div class="after">
-              <div v-for="step in example.after" v-bind:class="['step', step.status, step.type]">
-                <span v-if="step.status !== 'branch'">{{ step.title }}</span>
-                <div v-for="branch in step.branches" class="branchpath">
-                  <div>{{ branch.name }}</div>
-                  <div v-for="branchStep in branch.steps" v-bind:class="['step', branchStep.status, branchStep.type]">
-                    <span v-if="branchStep.status !== 'branch'">{{ branchStep.title }}</span>
-                    <div v-for="nestedBranch in branchStep.branches" class="branchpath">
-                      <div>{{ nestedBranch.name }}</div>
-                      <div v-for="nestedBranchStep in nestedBranch.steps" v-bind:class="['step', nestedBranchStep.status]">
-                        <span>{{ nestedBranchStep.title }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ol>
+          </li>
+        </ol>
+      </div>
     </div>
   </body>
   <script>
     var app = new Vue({
       el: '#app',
       data: {
-        linearExamples: [
+        groups: [
           {
-            title: 'Send Back to Proposer',
-            before: [
+            title: 'Linear Workflows',
+            examples: [
               {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 2'
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'sentback',
-                title: 'Approval Step 2'
-              },
-              {
-                status: 'pending',
-                title: 'Proposer'
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Approval Step',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 2'
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'sentback',
-                title: 'Approval Step 2'
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 1'
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Acknowledge Step',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Ack Step 1'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 2'
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Ack Step 1'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'sentback',
-                title: 'Approval Step 2'
-              },
-              {
-                status: 'complete',
-                title: 'Ack Step 1'
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 1'
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Notification Step',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Notify Step 1'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 2'
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Notify Step 1'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'sentback',
-                title: 'Approval Step 2'
-              },
-              {
-                status: 'complete',
-                title: 'Notify Step 1'
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 1'
-              }
-            ]
-          }
-        ],
-        singleBranchExamples: [
-          {
-            title: 'Send Back to Proposer',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Proposer',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2'
-                      }
-                    ]
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 2'
                   }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'cancelled',
-                type: 'branch',
-                branches: [
+                ],
+                after: [
                   {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1'
-                      },
-                      {
-                        status: 'sentback',
-                        title: 'Approval Step 2'
-                      }
-                    ]
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'sentback',
+                    title: 'Approval Step 2'
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Proposer'
                   }
                 ]
               },
               {
-                status: 'pending',
-                title: 'Proposer'
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Approval Step 2',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Approval Step',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 3'
-                      }
-                    ]
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 2'
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'sentback',
+                    title: 'Approval Step 2'
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 1'
                   }
                 ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
               },
               {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Acknowledge Step',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      },
-                      {
-                        status: 'sentback',
-                        title: 'Approval Step 3'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2'
-                      }
-                    ]
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Ack Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 2'
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Ack Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'sentback',
+                    title: 'Approval Step 2'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Ack Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 1'
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Notification Step',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Notify Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 2'
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Notify Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'sentback',
+                    title: 'Approval Step 2'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Notify Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 1'
                   }
                 ]
               }
             ]
           },
           {
-            title: 'Send Back to Approval Step 1',
-            before: [
+            title: 'Single Branch Workflows',
+            examples: [
               {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Proposer',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 3'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2'
+                          }
+                        ]
                       }
                     ]
                   }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'cancelled',
-                type: 'branch',
-                branches: [
+                ],
+                after: [
                   {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      },
-                      {
-                        status: 'sentback',
-                        title: 'Approval Step 3'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 1'
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Ack/Notification Inside Branch',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'cancelled',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Ack Step 1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 3'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Ack Step 1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      },
-                      {
-                        status: 'sentback',
-                        title: 'Approval Step 3'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Ack Step 1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Ack/Notification Outside Branch',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Ack Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Ack Step 1'
-              },
-              {
-                status: 'cancelled',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1'
-                      },
-                      {
-                        status: 'sentback',
-                        title: 'Approval Step 2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'complete',
-                title: 'Ack Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 1'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Approval Step 1 from Approval Step 3',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 3'
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'sentback',
-                title: 'Approval Step 3'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 1'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Approval Step 2 from Approval Step 3',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 3'
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'sentback',
-                title: 'Approval Step 3'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        multipleBranchExamples: [
-          {
-            title: 'Send Back to Proposer From Approval Step 1.2',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 1.2'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1'
+                          },
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 2'
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
+                    status: 'pending',
+                    title: 'Proposer'
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Approval Step 2',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 3'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'pending',
-                        title: 'Approval Step 2.2'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          },
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 3'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2'
+                          }
+                        ]
                       }
                     ]
                   }
                 ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
               },
               {
-                status: 'cancelled',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Approval Step 1',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
-                      },
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 3'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'cancelled',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'sentback',
-                        title: 'Approval Step 1.2'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          },
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 3'
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
+                    status: 'pending',
+                    title: 'Approval Step 1'
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Ack/Notification Inside Branch',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Ack Step 1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 3'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'cancelled',
-                        title: 'Approval Step 2.2'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Ack Step 1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          },
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 3'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Ack Step 1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2'
+                          }
+                        ]
                       }
                     ]
                   }
                 ]
               },
               {
-                status: 'complete',
-                title: 'Proposer'
+                title: 'Send Back to Ack/Notification Outside Branch',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Ack Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Ack Step 1'
+                  },
+                  {
+                    status: 'cancelled',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1'
+                          },
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Ack Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Approval Step 1 from Approval Step 3',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 3'
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'sentback',
+                    title: 'Approval Step 3'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Approval Step 2 from Approval Step 3',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 3'
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'sentback',
+                    title: 'Approval Step 3'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
           {
-            title: 'Send Back to Approval Step 1.1 from Approval Step 1.2',
-            before: [
+            title: 'Multiple Branch Workflows',
+            examples: [
               {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Proposer From Approval Step 1.2',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1.2'
+                          }
+                        ]
                       },
                       {
-                        status: 'pending',
-                        title: 'Approval Step 1.2'
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'cancelled',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 1.2'
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Approval Step 1.1 from Approval Step 1.2',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1.2'
+                          }
+                        ]
                       },
                       {
-                        status: 'pending',
-                        title: 'Approval Step 2.2'
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
                       }
                     ]
                   }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                ],
+                after: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 1.2'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1.1'
+                          }
+                        ]
                       },
                       {
-                        status: 'sentback',
-                        title: 'Approval Step 1.2'
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+              },
+              {
+                title: 'Send Back to Approval Step 1 From Approval Step 1.2',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1.2'
+                          }
+                        ]
                       },
                       {
-                        status: 'pending',
-                        title: 'Approval Step 1.1'
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'cancelled',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 1.2'
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
+                    status: 'pending',
+                    title: 'Approval Step 1'
                   }
                 ]
-              }
-            ],
-          },
-          {
-            title: 'Send Back to Approval Step 1 From Approval Step 1.2',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
               },
               {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Approval Step 1.1 from Approval Step 2',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.2'
+                          }
+                        ]
                       },
                       {
-                        status: 'pending',
-                        title: 'Approval Step 1.2'
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
+                    status: 'pending',
+                    title: 'Approval Step 2'
                   }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'cancelled',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
-                      },
-                      {
-                        status: 'sentback',
-                        title: 'Approval Step 1.2'
-                      }
-                    ]
-                  },
-                  {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'cancelled',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 1'
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Approval Step 1.1 from Approval Step 2',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.2'
-                      }
-                    ]
-                  },
-                  {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 2'
-              }
 
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
+                ],
+                after: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.2'
+                          }
+                        ]
                       },
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.2'
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
+                    status: 'sentback',
+                    title: 'Approval Step 2'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1.1'
+                          }
+                        ]
                       },
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.2'
+                        name: 'Branch 2 (Skipped this time through)'
                       }
                     ]
                   }
                 ]
               },
               {
-                status: 'sentback',
-                title: 'Approval Step 2'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Approval Step 1.2 from Approval Step 2',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'pending',
-                        title: 'Approval Step 1.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.2'
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2 (Skipped this time through)'
+                    status: 'pending',
+                    title: 'Approval Step 2'
                   }
-                ]
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Approval Step 1.2 from Approval Step 2',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.2'
-                      }
-                    ]
-                  },
-                  {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'pending',
-                title: 'Approval Step 2'
-              }
 
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
+                ],
+                after: [
                   {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.2'
-                      }
-                    ]
+                    status: 'complete',
+                    title: 'Proposer'
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'sentback',
-                title: 'Approval Step 2'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 1.2'
-                      }
-                    ]
+                    status: 'complete',
+                    title: 'Approval Step 1'
                   },
                   {
-                    name: 'Branch 2 (Skipped this time through)'
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        nestedBranchExamples: [
-          {
-            title: 'Send Back to Proposer From Approval Step 1.1.2',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'pending',
-                        type: 'branch',
-                        branches: [
+                        name: 'Branch 1',
+                        steps: [
                           {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'pending',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
                           },
                           {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'pending',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
+                            status: 'complete',
+                            title: 'Approval Step 1.2'
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.2'
                           }
                         ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'cancelled',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'cancelled',
-                        type: 'branch',
-                        branches: [
-                          {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'sentback',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
-                          {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'cancelled',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                    status: 'sentback',
+                    title: 'Approval Step 2'
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'cancelled',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'pending',
-                title: 'Proposer'
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Proposer From Approval Step 2.2',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'pending',
-                        type: 'branch',
-                        branches: [
+                        name: 'Branch 1',
+                        steps: [
                           {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'pending',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
-                          {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'pending',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'cancelled',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'cancelled',
-                        type: 'branch',
-                        branches: [
-                          {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'cancelled',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
-                          {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'cancelled',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'sentback',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'pending',
-                title: 'Proposer'
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Approval Step 1.1 From Approval Step 1.1.2',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
-                      },
-                      {
-                        status: 'pending',
-                        type: 'branch',
-                        branches: [
-                          {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'pending',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
-                          {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'pending',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
-                      },
-                      {
-                        status: 'cancelled',
-                        type: 'branch',
-                        branches: [
-                          {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'sentback',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
-                          {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'cancelled',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
+                            status: 'pending',
+                            title: 'Approval Step 1.2'
                           }
                         ]
                       },
                       {
-                        status: 'pending',
-                        title: 'Approval Step 1.1'
-                      }
-                    ]
-                  },
-                  {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 2.2'
+                        name: 'Branch 2 (Skipped this time through)'
                       }
                     ]
                   }
@@ -1762,497 +1293,1293 @@
             ]
           },
           {
-            title: 'Send Back to Approval Step 1 From Approval Step 1.1.2',
-            before: [
+            title: 'Nested Branch Workflows',
+            examples: [
               {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Proposer From Approval Step 1.1.2',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'pending',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'pending',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'pending',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
                       },
                       {
-                        status: 'pending',
-                        type: 'branch',
-                        branches: [
+                        name: 'Branch 2',
+                        steps: [
                           {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.2'
-                              },
-                              {
-                                status: 'pending',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
                           },
                           {
-                            name: 'Branch 2',
-                            steps: [
+                            status: 'pending',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'cancelled',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'cancelled',
+                            type: 'branch',
+                            branches: [
                               {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'sentback',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
                               },
                               {
-                                status: 'pending',
-                                title: 'Approval Step 1.2.2'
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'cancelled',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
                               }
                             ]
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 2.2'
                           }
                         ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
+                    status: 'pending',
+                    title: 'Proposer'
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Proposer From Approval Step 2.2',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'pending',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'pending',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'pending',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
                       },
                       {
-                        status: 'pending',
-                        title: 'Approval Step 2.2'
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
                       }
                     ]
                   }
-                ]
-              }
-            ],
-            after: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'cancelled',
-                type: 'branch',
-                branches: [
+                ],
+                after: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'cancelled',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'cancelled',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'cancelled',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'cancelled',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
                       },
                       {
-                        status: 'cancelled',
-                        type: 'branch',
-                        branches: [
+                        name: 'Branch 2',
+                        steps: [
                           {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'sentback',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
                           },
                           {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'cancelled',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
+                            status: 'sentback',
+                            title: 'Approval Step 2.2'
                           }
                         ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
+                    status: 'pending',
+                    title: 'Proposer'
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Approval Step 1.1 From Approval Step 1.1.2',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'pending',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'pending',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'pending',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
                       },
                       {
-                        status: 'cancelled',
-                        title: 'Approval Step 2.2'
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'cancelled',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'sentback',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'cancelled',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1.1'
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
                       }
                     ]
                   }
                 ]
               },
               {
-                status: 'pending',
-                title: 'Approval Step 1'
+                title: 'Send Back to Approval Step 1 From Approval Step 1.1.2',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'pending',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.2'
+                                  },
+                                  {
+                                    status: 'pending',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'pending',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'cancelled',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'cancelled',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'sentback',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'cancelled',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 1'
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Approval Step 1.1 from Approval Step 2',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'complete',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 2'
+                  }
+                ],
+                after: [{
+                  status: 'complete',
+                  title: 'Proposer'
+                },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'complete',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'sentback',
+                    title: 'Approval Step 2'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1.1'
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2 (Skipped this time through)'
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                title: 'Send Back to Approval Step 1.1.2 from Approval Step 2',
+                before: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'complete',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'pending',
+                    title: 'Approval Step 2'
+                  }
+                ],
+                after: [{
+                  status: 'complete',
+                  title: 'Proposer'
+                },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'complete',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1.1'
+                          },
+                          {
+                            status: 'complete',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.1'
+                                  },
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2',
+                                steps: [
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.1'
+                                  },
+                                  {
+                                    status: 'complete',
+                                    title: 'Approval Step 1.2.2'
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.1'
+                          },
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 2.2'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    status: 'sentback',
+                    title: 'Approval Step 2'
+                  },
+                  {
+                    status: 'pending',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: 'Branch 1',
+                        steps: [
+                          {
+                            status: 'complete',
+                            type: 'branch',
+                            branches: [
+                              {
+                                name: 'Branch 1',
+                                steps: [
+                                  {
+                                    status: 'pending',
+                                    title: 'Approval Step 1.1.2'
+                                  }
+                                ]
+                              },
+                              {
+                                name: 'Branch 2 (Skipped this time through)'
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        name: 'Branch 2 (Skipped this time through)'
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
           {
-            title: 'Send Back to Approval Step 1.1 from Approval Step 2',
-            before: [
+            title: 'Spawned Step Workflows (multiselect)',
+            examples: [
               {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Proposer From Spawned Step 1a',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'transparent',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: '',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1a'
+                          }
+                        ]
                       },
                       {
-                        status: 'complete',
-                        type: 'branch',
-                        branches: [
+                        name: '',
+                        steps: [
                           {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
+                            status: 'pending',
+                            title: 'Approval Step 1b'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
                           {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
+                            status: 'pending',
+                            title: 'Approval Step 1c'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'transparent',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 1a'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 1b'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 1c'
                           }
                         ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
+                    status: 'pending',
+                    title: 'Proposer'
                   }
                 ]
               },
               {
-                status: 'pending',
-                title: 'Approval Step 2'
-              }
-            ],
-            after: [{
-              status: 'complete',
-              title: 'Proposer'
-            },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Proposer From Spawned Step 1b',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'transparent',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: '',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1a'
+                          }
+                        ]
                       },
                       {
-                        status: 'complete',
-                        type: 'branch',
-                        branches: [
+                        name: '',
+                        steps: [
                           {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
+                            status: 'pending',
+                            title: 'Approval Step 1b'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
                           {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
+                            status: 'pending',
+                            title: 'Approval Step 1c'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'transparent',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 1a'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 1b'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 1c'
                           }
                         ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
+                    status: 'pending',
+                    title: 'Proposer'
                   }
                 ]
               },
               {
-                status: 'sentback',
-                title: 'Approval Step 2'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Approval Step 1 From Spawned Step 2a',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
-                      {
-                        status: 'pending',
-                        title: 'Approval Step 1.1'
-                      }
-                    ]
+                    status: 'complete',
+                    title: 'Proposer'
                   },
                   {
-                    name: 'Branch 2 (Skipped this time through)'
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            title: 'Send Back to Approval Step 1.1.2 from Approval Step 2',
-            before: [
-              {
-                status: 'complete',
-                title: 'Proposer'
-              },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'transparent',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: '',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 2a'
+                          }
+                        ]
                       },
                       {
-                        status: 'complete',
-                        type: 'branch',
-                        branches: [
+                        name: '',
+                        steps: [
                           {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
+                            status: 'pending',
+                            title: 'Approval Step 2b'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
                           {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
+                            status: 'pending',
+                            title: 'Approval Step 2c'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'complete',
+                    title: 'Approval Step 1'
+                  },
+                  {
+                    status: 'transparent',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'sentback',
+                            title: 'Approval Step 2a'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 2b'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'cancelled',
+                            title: 'Approval Step 2c'
                           }
                         ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
-                      },
-                      {
-                        status: 'complete',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
+                    status: 'pending',
+                    title: 'Approval Step 1'
                   }
                 ]
               },
               {
-                status: 'pending',
-                title: 'Approval Step 2'
-              }
-            ],
-            after: [{
-              status: 'complete',
-              title: 'Proposer'
-            },
-              {
-                status: 'complete',
-                title: 'Approval Step 1'
-              },
-              {
-                status: 'complete',
-                type: 'branch',
-                branches: [
+                title: 'Send Back to Spawned Step',
+                before: [
                   {
-                    name: 'Branch 1',
-                    steps: [
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'transparent',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 1.1'
+                        name: '',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1a'
+                          }
+                        ]
                       },
                       {
-                        status: 'complete',
-                        type: 'branch',
-                        branches: [
+                        name: '',
+                        steps: [
                           {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.1'
-                              },
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
+                            status: 'complete',
+                            title: 'Approval Step 1b'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
                           {
-                            name: 'Branch 2',
-                            steps: [
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.1'
-                              },
-                              {
-                                status: 'complete',
-                                title: 'Approval Step 1.2.2'
-                              }
-                            ]
+                            status: 'complete',
+                            title: 'Approval Step 1c'
                           }
                         ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2',
-                    steps: [
+                    status: 'pending',
+                    title: 'Approval Step 2'
+                  }
+                ],
+                after: [
+                  {
+                    status: 'complete',
+                    title: 'Proposer'
+                  },
+                  {
+                    status: 'transparent',
+                    type: 'branch',
+                    branches: [
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.1'
+                        name: '',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1a'
+                          }
+                        ]
                       },
                       {
-                        status: 'complete',
-                        title: 'Approval Step 2.2'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                status: 'sentback',
-                title: 'Approval Step 2'
-              },
-              {
-                status: 'pending',
-                type: 'branch',
-                branches: [
-                  {
-                    name: 'Branch 1',
-                    steps: [
+                        name: '',
+                        steps: [
+                          {
+                            status: 'complete',
+                            title: 'Approval Step 1b'
+                          }
+                        ]
+                      },
                       {
-                        status: 'complete',
-                        type: 'branch',
-                        branches: [
+                        name: '',
+                        steps: [
                           {
-                            name: 'Branch 1',
-                            steps: [
-                              {
-                                status: 'pending',
-                                title: 'Approval Step 1.1.2'
-                              }
-                            ]
-                          },
-                          {
-                            name: 'Branch 2 (Skipped this time through)'
+                            status: 'complete',
+                            title: 'Approval Step 1c'
                           }
                         ]
                       }
                     ]
                   },
                   {
-                    name: 'Branch 2 (Skipped this time through)'
+                    status: 'sentback',
+                    title: 'Approval Step 2'
+                  },
+                  {
+                    status: 'transparent',
+                    type: 'branch',
+                    branches: [
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1a'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1b'
+                          }
+                        ]
+                      },
+                      {
+                        name: '',
+                        steps: [
+                          {
+                            status: 'pending',
+                            title: 'Approval Step 1c'
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
